@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -244,7 +244,7 @@ public class CellGenerator : MonoBehaviour
                 }
                 break;
             default:
-                Debug.Log("i wonder how, i wonder why");
+                Debug.Log("how?");
                 break;
         }
     }
