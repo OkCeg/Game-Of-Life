@@ -153,8 +153,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   topLeftCorner: {fileID: 1455585917}
   cell: {fileID: 0}
-  cellWidth: 0
-  cellHeight: 0
+  rows: 100
+  columns: 100
   colorOn: 0
   musicOn: 0
   audioClips:

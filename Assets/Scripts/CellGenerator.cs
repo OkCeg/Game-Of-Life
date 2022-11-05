@@ -8,16 +8,28 @@ public class CellGenerator : MonoBehaviour
     public Transform topLeftCorner;
 
     public GameObject cell;
-    public float cellWidth;
-    public float cellHeight;
+    private float cellWidth;
+    private float cellHeight;
 
     public Cell[,] cells;
 
-    public const int rows = 100;
-    public const int columns = 100;
+    // default 100 by 100
+    public int rows = 100;
+    public int columns = 100;
+
+    private float widthScale;
+    private float heightScale;
 
     public bool colorOn = false;
     public bool musicOn = false;
+
+    // default: 2, 3, 3
+    // straight saucer: -1, -1, 2
+    // squares #1: 3, 4, 1
+    // squares #2: 3, 5, 0
+    public int aliveCondition1 = 2;
+    public int aliveCondition2 = 3;
+    public int reviveCondition = 3;
 
     private int r = 255;
     private int g = 0;
@@ -49,12 +61,16 @@ public class CellGenerator : MonoBehaviour
         cellWidth = cell.transform.localScale.x;
         cellHeight = cell.transform.localScale.y;
 
+        widthScale = 100f / rows;
+        heightScale = 100f / columns;
+
         for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < columns; j++)
             {
-                GameObject newCell = Instantiate(cell, new Vector3(topLeftCorner.position.x + j * cellWidth,
-                    topLeftCorner.position.y - i * cellHeight, 0), Quaternion.identity);
+                GameObject newCell = Instantiate(cell, new Vector3(topLeftCorner.position.x + j * cellWidth * widthScale,
+                    topLeftCorner.position.y - i * cellHeight * heightScale, 0), Quaternion.identity);
+                newCell.transform.localScale = new Vector2(0.08f * widthScale, 0.08f * heightScale);
 
                 newCell.name = i + "," + j;
 
@@ -123,6 +139,19 @@ public class CellGenerator : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    cells[i, j].aliveCondition1 = aliveCondition1;
+                    cells[i, j].aliveCondition2 = aliveCondition2;
+                    cells[i, j].reviveCondition = reviveCondition;
+                }
+            }
+        }
+
         if (colorOn && currentColorFrameCount % colorFrameRate == 0)
         {
             SetColor();

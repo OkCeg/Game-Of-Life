@@ -15,6 +15,11 @@ public class Cell : MonoBehaviour
     public int g = 255;
     public int b = 255;
 
+    // default 2, 3, 3 (may be changed in CellGenerator)
+    public int aliveCondition1 = 2;
+    public int aliveCondition2 = 3;
+    public int reviveCondition = 3;
+
     private void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
@@ -61,7 +66,7 @@ public class Cell : MonoBehaviour
         if (isAlive)
         {
             //if number of neighbors is not 2 or 3, kill the cell
-            if (!(aliveNeighbors == 2 || aliveNeighbors == 3))
+            if (!(aliveNeighbors == aliveCondition1 || aliveNeighbors == aliveCondition2))
             {
                 shouldBeAlive = false;
             }
@@ -74,7 +79,7 @@ public class Cell : MonoBehaviour
         else
         {
             //if number of neighbors is 3, give life to cell
-            if (aliveNeighbors == 3)
+            if (aliveNeighbors == reviveCondition)
             {
                 shouldBeAlive = true;
             }
