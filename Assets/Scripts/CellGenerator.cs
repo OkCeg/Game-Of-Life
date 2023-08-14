@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CellGenerator : MonoBehaviour
 {
@@ -30,6 +31,10 @@ public class CellGenerator : MonoBehaviour
     public int aliveCondition1 = 2;
     public int aliveCondition2 = 3;
     public int reviveCondition = 3;
+
+    public InputField inputField1;
+    public InputField inputField2;
+    public InputField inputField3;
 
     private int r = 255;
     private int g = 0;
@@ -139,19 +144,6 @@ public class CellGenerator : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < columns; j++)
-                {
-                    cells[i, j].aliveCondition1 = aliveCondition1;
-                    cells[i, j].aliveCondition2 = aliveCondition2;
-                    cells[i, j].reviveCondition = reviveCondition;
-                }
-            }
-        }
-
         if (colorOn && currentColorFrameCount % colorFrameRate == 0)
         {
             SetColor();
@@ -319,6 +311,61 @@ public class CellGenerator : MonoBehaviour
         else
         {
             musicOn = true;
+        }
+    }
+
+    public void SetAlive1()
+    {
+        if (int.TryParse(inputField1.text, out int value))
+        {
+            aliveCondition1 = value;
+        }
+        else
+        {
+            aliveCondition1 = 2;
+        }
+
+        UpdateCellConditions();
+    }
+
+    public void SetAlive2()
+    {
+        if (int.TryParse(inputField2.text, out int value))
+        {
+            aliveCondition2 = value;
+        }
+        else
+        {
+            aliveCondition2 = 3;
+        }
+
+        UpdateCellConditions();
+    }
+
+    public void SetRevive()
+    {
+        if (int.TryParse(inputField3.text, out int value))
+        {
+            reviveCondition = value;
+        }
+        else
+        {
+            reviveCondition = 3;
+        }
+
+        UpdateCellConditions();
+    }
+
+    public void UpdateCellConditions()
+    {
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < columns; j++)
+            {
+                cells[i, j].aliveCondition1 = aliveCondition1;
+                cells[i, j].aliveCondition2 = aliveCondition2;
+                cells[i, j].reviveCondition = reviveCondition;
+            }
         }
     }
 }
